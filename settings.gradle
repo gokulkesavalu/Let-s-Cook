@@ -15,3 +15,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "Let-s-Cook"
 include ':app'
+include ':core:ui'
+include ':core:network'
+include ':core:database'
+include ':feature:home'
+include ':feature:meals'
+include ':feature:mealdetails'

@@ -1,4 +1,4 @@
-package co.uk.gokul.letscook.ui.theme
+package co.uk.gokul.letscook.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
