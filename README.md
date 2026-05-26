@@ -21,9 +21,9 @@ This project follows a modular architecture to ensure scalability and maintainab
 - **Language**: [Kotlin](https://kotlinlang.org/) (2.2.10)
 - **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3
 - **Dependency Management**: Gradle Version Catalog (`libs.versions.toml`)
-- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp
+- **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
+- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for JSON)
 - **Database**: [Room](https://developer.android.com/training/data-storage/room)
-- **Image Loading**: [Coil](https://coil-kt.github.io/coil/) (if applicable)
 - **Architecture**: MVVM / Clean Architecture principles
 
 ## Getting Started
@@ -38,4 +38,7 @@ This project follows a modular architecture to ensure scalability and maintainab
 - Migrated to **Android Gradle Plugin 9.2.1**.
 - Updated to **Kotlin 2.2.10**.
 - Updated to **Compose BOM 2026.05.01**.
-- Refactored build scripts to remove unnecessary Proguard configurations.
+- Integrated **Hilt** for dependency injection across `:app`, `:core:network`, and `:core:database`.
+- Completed **Network Module** with `MealsService` and DTOs for categories and ingredients.
+- Added comprehensive **KDoc** documentation to the networking layer.
+- Refactored build scripts to remove unnecessary Proguard configurations and resolve classloader issues.
