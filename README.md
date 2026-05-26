@@ -1,9 +1,41 @@
 # Let's Cook
 
-A modern Android application for cooking enthusiasts.
+A modern Android application for cooking enthusiasts, built with the latest Android technologies and a modular architecture.
+
+## Project Structure
+
+This project follows a modular architecture to ensure scalability and maintainability.
+
+- **:app**: The main application module that orchestrates navigation and dependency injection.
+- **:feature**: Contains feature-specific modules.
+    - **:feature:home**: The home screen and related logic.
+    - **:feature:meals**: Display and management of meal lists.
+    - **:feature:mealdetails**: Detailed view for a specific meal.
+- **:core**: Shared modules used across features.
+    - **:core:ui**: Shared UI components, themes, and design system.
+    - **:core:network**: Networking logic using Retrofit and OkHttp.
+    - **:core:database**: Local data persistence using Room.
 
 ## Tech Stack
-- Kotlin
-- Jetpack Compose
-- Material 3
-- Android Architecture Components
+
+- **Language**: [Kotlin](https://kotlinlang.org/) (2.2.10)
+- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3
+- **Dependency Management**: Gradle Version Catalog (`libs.versions.toml`)
+- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp
+- **Database**: [Room](https://developer.android.com/training/data-storage/room)
+- **Image Loading**: [Coil](https://coil-kt.github.io/coil/) (if applicable)
+- **Architecture**: MVVM / Clean Architecture principles
+
+## Getting Started
+
+1. Clone the repository.
+2. Open the project in Android Studio (Ladybug or newer recommended).
+3. Build the project: `./gradlew assembleDebug`
+4. Run the app on an emulator or physical device.
+
+## Recent Updates
+
+- Migrated to **Android Gradle Plugin 9.2.1**.
+- Updated to **Kotlin 2.2.10**.
+- Updated to **Compose BOM 2026.05.01**.
+- Refactored build scripts to remove unnecessary Proguard configurations.
