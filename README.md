@@ -12,7 +12,8 @@ This project follows a modular architecture to ensure scalability and maintainab
     - **:feature:meals**: Display and management of meal lists.
     - **:feature:mealdetails**: Detailed view for a specific meal.
 - **:core**: Shared modules used across features.
-    - **:core:ui**: Shared UI components, themes, and design system.
+    - **:core:common**: Low-level utilities and shared Kotlin-only logic (e.g., Flag Emoji mapping).
+    - **:core:ui**: Shared UI components, themes, and design system (e.g., `AreaItem` card).
     - **:core:network**: Networking logic using Retrofit and OkHttp.
     - **:core:database**: Local data persistence using Room.
 
@@ -39,6 +40,8 @@ This project follows a modular architecture to ensure scalability and maintainab
 - Updated to **Kotlin 2.2.10**.
 - Updated to **Compose BOM 2026.05.01**.
 - Integrated **Hilt** for dependency injection across `:app`, `:core:network`, and `:core:database`.
-- Completed **Network Module** with `MealsService` and DTOs for categories and ingredients.
+- Completed **Network Module** with `MealsService` and DTOs for categories, ingredients, and areas (including `strCountry` metadata).
 - Added comprehensive **KDoc** documentation to the networking layer.
+- Created **:core:common** module for shared utilities like the `getFlagEmoji` mapping.
+- Implemented **`AreaItem`** in `:core:ui`: A modern, card-styled component for displaying cuisines with large flag emojis, supporting both light and dark modes.
 - Refactored build scripts to remove unnecessary Proguard configurations and resolve classloader issues.
