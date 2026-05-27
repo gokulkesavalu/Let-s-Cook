@@ -1,61 +1,96 @@
-# Let's Cook
+# Let's Cook 🍳
 
-A modern Android application for cooking enthusiasts, built with the latest Android technologies and a modular architecture.
+A modern Android application for cooking enthusiasts, built with the latest Android technologies and
+a modular, clean architecture.
 
-## Project Structure
+## 🚀 Overview
 
-This project follows a modular architecture to ensure scalability and maintainability.
+Let's Cook is designed to showcase modern Android development practices, including multi-module
+project structure, Jetpack Compose and offline-first capabilities. It provides a robust platform
+for exploring meal categories, cuisines and ingredients from around the world.
 
-- **:app**: The main application module that orchestrates navigation and dependency injection.
-- **:feature**: Contains feature-specific modules.
-    - **:feature:home**: The home screen and related logic.
-    - **:feature:meals**: Display and management of meal lists.
-    - **:feature:mealdetails**: Detailed view for a specific meal.
-- **:core**: Shared modules used across features.
-    - **:core:common**: Low-level utilities and shared Kotlin-only logic (e.g., Flag Emoji mapping).
-    - **:core:ui**: Shared UI components, themes, and design system (e.g., `AreaItem` card).
-    - **:core:network**: Networking logic using Retrofit and OkHttp.
-    - **:core:database**: Local data persistence using Room.
+## 🏗 Project Structure
 
-## Tech Stack
+The project follows a **Modular Architecture** to ensure scalability, maintainability, and clear
+separation of concerns.
+
+- **:app**: The main application entry point. Orchestrates top-level navigation, dependency
+  injection configuration and theme initialization.
+- **:feature**: Contains isolated, feature-specific modules following the MVVM pattern.
+    - **:feature:home**: The main landing screen. Features categorized lists, cuisine areas and
+      ingredients.
+    - **:feature:meals**: Displays a list of recipes filtered by category, area, or ingredient.
+    - **:feature:mealdetails**: Provides a comprehensive view of a specific recipe, including
+      instructions and measurements.
+- **:core**: Shared modules providing foundational logic and UI components.
+    - **:core:common**: Low-level utilities and pure Kotlin logic (e.g., Flag Emoji mapping
+      utilities).
+    - **:core:ui**: Reusable UI components (like `AreaItem`), standard Material 3 themes, and
+      typography.
+    - **:core:navigation**: Centralized, type-safe navigation routes using Kotlin Serialization to
+      eliminate string-based routing.
+    - **:core:network**: Retrofit-based networking layer with global DTO definitions and logging.
+    - **:core:database**: Local persistence layer using Room, ensuring the app remains functional
+      offline.
+
+## 🛠 Tech Stack
 
 - **Language**: [Kotlin](https://kotlinlang.org/) (2.2.10)
 - **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3
-- **Dependency Management**: Gradle Version Catalog (`libs.versions.toml`)
-- **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
-- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for JSON)
-- **Database**: [Room](https://developer.android.com/training/data-storage/room)
-- **Architecture**: MVVM / Clean Architecture principles (Repository Pattern)
+- **Navigation**: [Jetpack Navigation](https://developer.android.com/guide/navigation) (Type-safe
+  with Kotlin Serialization)
+- **Dependency Injection
+  **: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
+- **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for
+  JSON)
+- **Local Database**: [Room](https://developer.android.com/training/data-storage/room)
+- **Asynchronous Flow**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) &
+  Flow
+- **Architecture**: Clean Architecture / MVVM / Repository Pattern
 
-## Architecture Overview
+## 📐 Architecture Overview
 
-The application follows the **Clean Architecture** principles, separating concerns into three main layers:
+The application is built on **Clean Architecture** principles to ensure the business logic is
+independent of the UI and external data sources.
 
-1. **UI Layer**: Composed of Jetpack Compose screens and view models (to be implemented).
-2. **Domain Layer**: Contains the business logic, domain models, and repository interfaces. This layer is independent of any other layer.
-3. **Data Layer**: Includes repository implementations, data sources (Retrofit for API, Room for local DB), and data mappers.
+1. **UI Layer**: Jetpack Compose screens and ViewModels. Uses `StateFlow` and
+   `collectAsStateWithLifecycle()` for reactive UI updates.
+2. **Domain Layer**: Pure Kotlin layer containing domain models and repository interfaces.
+3. **Data Layer**: Responsible for data retrieval and persistence. Includes repository
+   implementations, data mappers (DTO ↔ Entity ↔ Domain), and local/remote data sources.
 
-### Repository Pattern
+### 💾 Repository & Caching Strategy
 
-The project utilizes the **Repository Pattern** to abstract data sources from the domain layer. 
+The project implements an **Offline-First** approach. For example, `HomeRepositoryImpl` uses a *
+*Cache-First** strategy:
 
-- **HomeRepository**: Orchestrates the fetching of categories, areas, and ingredients.
-    - `HomeRepositoryImpl`: Fetches data from the `MealsService` (Remote) and will eventually handle local caching via `LetsCookDatabase`.
+* Requests are first checked against the local Room database.
+* Data is considered valid for **15 minutes** (configurable).
+* If the cache is stale or missing, fresh data is fetched from the network, persisted to the
+  database, and emitted to the UI.
+
+## ✨ Key Features & Refinements
+
+- **Parallel & Resilient Data Loading**: The Home screen fetches categories, areas, and ingredients
+  simultaneously using `supervisorScope`. This ensures that a single failure (e.g., ingredients API
+  down) doesn't block the entire screen from loading.
+- **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes
+  and arguments are defined as `@Serializable` data classes.
+- **Granular Loading & Error States**: The UI state tracks loading and errors for each data type
+  independently, allowing for a more responsive and informative user experience.
+- **Smart Data Mapping**: Rigorous mapping between network DTOs, database Entities, and Domain
+  models ensures data integrity across layers.
+- **Modern Design System**: Full Material 3 integration with support for Light/Dark modes, dynamic
+  colors (Android 12+), and adaptive icons.
+- **Comprehensive Documentation**: Every class, function, and property in the project is documented
+  using KDoc, following standard Kotlin practices.
+
+## 🏁 Getting Started
 
 1. Clone the repository.
-2. Open the project in Android Studio (Ladybug or newer recommended).
+2. Open in Android Studio (Ladybug 2024.2.1 or newer recommended).
 3. Build the project: `./gradlew assembleDebug`
-4. Run the app on an emulator or physical device.
+4. Run on an emulator or physical device.
 
-## Recent Updates
-
-- Migrated to **Android Gradle Plugin 9.2.1**.
-- Updated to **Kotlin 2.2.10**.
-- Updated to **Compose BOM 2026.05.01**.
-- Integrated **Hilt** for dependency injection across `:app`, `:core:network`, and `:core:database`.
-- Completed **Network Module** with `MealsService` and DTOs for categories, ingredients, and areas (including `strCountry` metadata).
-- **Database Layer Refinement**: Fixed KSP naming conflicts and ensured proper primary keys for Room entities (`CategoryEntity`, `IngredientEntity`, `AreaEntity`).
-- **Comprehensive Documentation**: Added KDoc documentation across the entire project, covering all modules from core utilities to feature-level UI components and data mappers (`HomeMapper`).
-- Created **:core:common** module for shared utilities like the `getFlagEmoji` mapping.
-- Implemented **`AreaItem`** in `:core:ui`: A modern, card-styled component for displaying cuisines with large flag emojis, supporting both light and dark modes.
-- Refactored build scripts to remove unnecessary Proguard configurations and resolve classloader issues.
+---
+Built with ❤️ for cooking and modern Android development.

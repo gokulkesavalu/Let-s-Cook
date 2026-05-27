@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 /**
  * Data transfer object for the ingredients' response.
  *
- * @property ingredients List of ingredients.
+ * @property meals List of ingredients.
  */
 @Serializable
 data class IngredientsResponse(
-    val ingredients: List<IngredientDto>,
+    val meals: List<IngredientDto>,
 )
 
 /**

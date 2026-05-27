@@ -57,7 +57,7 @@ fun CategoryEntity.toDomain() = Category(
  * Maps [AreasResponse] DTO to [Areas] domain model.
  */
 fun AreasResponse.toDomain() = Areas(
-    areas = this.areas.map { it.toDomain() }
+    areas = this.meals.map { it.toDomain() }
 )
 
 /**
@@ -88,7 +88,7 @@ fun AreaEntity.toDomain() = Area(
  * Maps [IngredientsResponse] DTO to [Ingredients] domain model.
  */
 fun IngredientsResponse.toDomain() = Ingredients(
-    ingredients = this.ingredients.map { it.toDomain() }
+    ingredients = this.meals.map { it.toDomain() }
 )
 
 /**

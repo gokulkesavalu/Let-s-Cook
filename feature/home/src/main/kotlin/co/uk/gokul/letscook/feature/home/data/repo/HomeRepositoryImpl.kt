@@ -75,7 +75,7 @@ class HomeRepositoryImpl @Inject constructor(
         return try {
             val areas = mealsService.getAreas()
             dbScope.launch {
-                areaDao.addAreas(areas.areas.map { it.toEntity() })
+                areaDao.addAreas(areas.meals.map { it.toEntity() })
             }
             Result.success(areas.toDomain())
         } catch (e: Exception) {
@@ -96,7 +96,7 @@ class HomeRepositoryImpl @Inject constructor(
         return try {
             val ingredients = mealsService.getIngredients()
             dbScope.launch {
-                ingredientDao.addIngredients(ingredients.ingredients.map { it.toEntity() })
+                ingredientDao.addIngredients(ingredients.meals.map { it.toEntity() })
             }
             Result.success(ingredients.toDomain())
         } catch (e: Exception) {

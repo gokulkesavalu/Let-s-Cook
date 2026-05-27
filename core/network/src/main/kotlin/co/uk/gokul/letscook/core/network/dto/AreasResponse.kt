@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 /**
  * Data transfer object for the areas' response.
  *
- * @property areas List of areas (cuisines).
+ * @property meals List of areas (cuisines).
  */
 @Serializable
 data class AreasResponse(
-    val areas: List<AreaDto>,
+    val meals: List<AreaDto>,
 )
 
 /**
@@ -21,5 +21,5 @@ data class AreasResponse(
 @Serializable
 data class AreaDto(
     val strArea: String,
-    val strCountry: String,
+    val strCountry: String = "",
 )
