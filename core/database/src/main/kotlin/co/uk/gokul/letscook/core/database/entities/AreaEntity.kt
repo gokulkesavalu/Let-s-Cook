@@ -13,4 +13,5 @@ import androidx.room.PrimaryKey
 data class AreaEntity(
     @PrimaryKey val strArea: String,
     val strCountry: String,
+    val cachedAt: Long = System.currentTimeMillis()
 )

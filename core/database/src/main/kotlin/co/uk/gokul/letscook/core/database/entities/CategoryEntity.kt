@@ -17,4 +17,5 @@ data class CategoryEntity(
     val strCategory: String,
     val strCategoryDescription: String,
     val strCategoryThumb: String,
+    val cachedAt: Long = System.currentTimeMillis()
 )

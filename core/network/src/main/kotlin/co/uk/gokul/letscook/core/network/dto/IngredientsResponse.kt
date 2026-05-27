@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class IngredientsResponse(
-    val meals: List<Ingredient>,
+    val ingredients: List<IngredientDto>,
 )
 
 /**
@@ -21,7 +21,7 @@ data class IngredientsResponse(
  * @property strType Optional category type of the ingredient.
  */
 @Serializable
-data class Ingredient(
+data class IngredientDto(
     val idIngredient: String,
     val strIngredient: String,
     val strDescription: String? = null,

@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class CategoriesResponse(
-    val categories: List<Category>,
+    val categories: List<CategoryDto>,
 )
 
 /**
@@ -21,7 +21,7 @@ data class CategoriesResponse(
  * @property strCategoryThumb Thumbnail URL for the category.
  */
 @Serializable
-data class Category(
+data class CategoryDto(
     val idCategory: String,
     val strCategory: String,
     val strCategoryDescription: String,

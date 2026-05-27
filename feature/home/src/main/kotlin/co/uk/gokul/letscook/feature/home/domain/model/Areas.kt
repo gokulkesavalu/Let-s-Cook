@@ -5,7 +5,7 @@ package co.uk.gokul.letscook.feature.home.domain.model
  *
  * @property categories List of areas.
  */
-data class Areas(val categories: List<Area>)
+data class Areas(val areas: List<Area>)
 
 /**
  * Domain model representing a single geographic area.

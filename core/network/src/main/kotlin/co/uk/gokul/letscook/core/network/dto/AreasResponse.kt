@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AreasResponse(
-    val meals: List<Area>,
+    val areas: List<AreaDto>,
 )
 
 /**
@@ -19,7 +19,7 @@ data class AreasResponse(
  * @property strCountry Name of the country (e.g., "India", "Italy").
  */
 @Serializable
-data class Area(
+data class AreaDto(
     val strArea: String,
     val strCountry: String,
 )

@@ -17,4 +17,5 @@ data class IngredientEntity(
     val strIngredient: String,
     val strDescription: String? = null,
     val strType: String? = null,
+    val cachedAt: Long = System.currentTimeMillis()
 )

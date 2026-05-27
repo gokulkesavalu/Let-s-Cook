@@ -12,16 +12,16 @@ interface HomeRepository {
     /**
      * Retrieves the list of meal categories.
      */
-    suspend fun getCategories(): Categories
+    suspend fun getCategories(): Result<Categories>
 
     /**
      * Retrieves the list of geographic areas.
      */
-    suspend fun getAreas(): Areas
+    suspend fun getAreas(): Result<Areas>
 
     /**
      * Retrieves the list of ingredients.
      */
-    suspend fun getIngredients(): Ingredients
+    suspend fun getIngredients(): Result<Ingredients>
 
 }
