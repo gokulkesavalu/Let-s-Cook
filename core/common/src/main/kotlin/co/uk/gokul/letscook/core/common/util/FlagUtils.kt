@@ -1,7 +1,13 @@
 package co.uk.gokul.letscook.core.common.util
 
 /**
- * Simple mapper from country name to flag emoji.
+ * Maps a country name to its corresponding flag emoji.
+ *
+ * This utility provides a quick way to get visual representation for geographic areas
+ * when images or icons are not provided by the API.
+ *
+ * @param countryName The name of the country (case-insensitive).
+ * @return A string containing the flag emoji, or a default world globe icon if the country is not mapped.
  */
 fun getFlagEmoji(countryName: String): String {
     return when (countryName.lowercase()) {

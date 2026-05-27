@@ -27,6 +27,13 @@ private val LightColorScheme = lightColorScheme(
     tertiary = Pink40
 )
 
+/**
+ * The main theme for the Let's Cook application.
+ *
+ * @param darkTheme Whether the dark theme should be used.
+ * @param dynamicColor Whether dynamic color should be used (Android 12+).
+ * @param content The composable content to be themed.
+ */
 @Composable
 fun LetsCookTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

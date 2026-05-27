@@ -41,7 +41,8 @@ This project follows a modular architecture to ensure scalability and maintainab
 - Updated to **Compose BOM 2026.05.01**.
 - Integrated **Hilt** for dependency injection across `:app`, `:core:network`, and `:core:database`.
 - Completed **Network Module** with `MealsService` and DTOs for categories, ingredients, and areas (including `strCountry` metadata).
-- Added comprehensive **KDoc** documentation to the networking layer.
+- **Database Layer Refinement**: Fixed KSP naming conflicts and ensured proper primary keys for Room entities (`CategoryEntity`, `IngredientEntity`, `AreaEntity`).
+- **Comprehensive Documentation**: Added KDoc documentation across the entire project, covering all modules from core utilities to feature-level UI components.
 - Created **:core:common** module for shared utilities like the `getFlagEmoji` mapping.
 - Implemented **`AreaItem`** in `:core:ui`: A modern, card-styled component for displaying cuisines with large flag emojis, supporting both light and dark modes.
 - Refactored build scripts to remove unnecessary Proguard configurations and resolve classloader issues.
