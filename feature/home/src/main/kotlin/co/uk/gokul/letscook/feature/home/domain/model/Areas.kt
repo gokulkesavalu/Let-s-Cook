@@ -3,7 +3,7 @@ package co.uk.gokul.letscook.feature.home.domain.model
 /**
  * Domain model representing a list of geographic areas.
  *
- * @property categories List of areas.
+ * @property areas List of areas.
  */
 data class Areas(val areas: List<Area>)
 

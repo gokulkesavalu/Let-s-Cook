@@ -3,9 +3,9 @@ package co.uk.gokul.letscook.core.network.dto
 import kotlinx.serialization.Serializable
 
 /**
- * Data transfer object for the areas response.
+ * Data transfer object for the areas' response.
  *
- * @property meals List of areas (cuisines).
+ * @property areas List of areas (cuisines).
  */
 @Serializable
 data class AreasResponse(
