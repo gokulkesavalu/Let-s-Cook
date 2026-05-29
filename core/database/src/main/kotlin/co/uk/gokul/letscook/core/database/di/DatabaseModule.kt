@@ -26,12 +26,13 @@ object DatabaseModule {
      */
     @Provides
     @Singleton
-    fun provideGKStoresDatabase(@ApplicationContext app: Context): LetsCookDatabase =
+    fun provideLetsCookDatabase(@ApplicationContext app: Context): LetsCookDatabase =
         Room.databaseBuilder(
             app,
             LetsCookDatabase::class.java,
             "lets_cook_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
 
     /**
      * Provides the [AreaDao] instance from the database.

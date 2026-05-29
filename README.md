@@ -30,7 +30,7 @@ The project follows a **Modular Architecture** to ensure scalability, maintainab
 - **Navigation**: [Jetpack Navigation](https://developer.android.com/guide/navigation) (Type-safe with Kotlin Serialization)
 - **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
 - **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for JSON)
-- **Local Database**: [Room](https://developer.android.com/training/data-storage/room) (v2 schema)
+- **Local Database**: [Room](https://developer.android.com/training/data-storage/room) (v2 schema with destructive migration enabled for development)
 - **Asynchronous Flow**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & Flow
 - **Annotation Processing**: [KSP](https://kotlinlang.org/docs/ksp-overview.html) for fast and efficient code generation.
 - **Architecture**: Clean Architecture / MVVM / Repository Pattern
@@ -45,15 +45,16 @@ The application is built on **Clean Architecture** principles to ensure business
 
 ### 💾 Repository & Caching Strategy
 
-The project implements an **Offline-First** approach. The `HomeRepositoryImpl` uses a **Cache-First** strategy:
-* Requests are first checked against the local Room database.
-* Data is considered valid for **15 minutes** (configurable).
-* If the cache is stale or missing, fresh data is fetched from the network, persisted to the database, and emitted to the UI.
+The project implements an **Offline-First** approach with a robust **Cache-First** strategy:
+* **SSOT (Single Source of Truth)**: Data is always served from the local Room database if the cache is valid.
+* **Cache Validation**: Data is considered valid for **15 minutes**.
+* **Generic Data Fetching**: Implemented a refactored, generic `fetchData` helper in the repositories to handle the complex flow of checking cache, fetching from network, and updating the database in the background, ensuring high code reuse and maintainability.
 
 ## ✨ Key Features & Technical Highlights
 
 - **Parallel & Resilient Data Loading**: The Home screen fetches categories, areas, and ingredients simultaneously using `supervisorScope`. This ensures that a single failure (e.g., ingredients API down) doesn't block the entire screen from loading.
 - **Deep Ingredient Search**: Implemented a comprehensive search query in `MealDao` that scans all 20 ingredient slots in the database, ensuring that recipes are correctly discovered regardless of where the search ingredient appears in the list.
+- **Centralized Asynchrony**: Utilizes a single, Hilt-provided `CoroutineScope` with a `SupervisorJob` for persistent background tasks (like cache updates), preventing duplicate bindings and ensuring consistent lifecycle management across modules.
 - **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety.
 - **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` for the root container and `LazyRow` for carousels, ensuring smooth scrolling and centered progress indicators.
 - **Visual Components**:

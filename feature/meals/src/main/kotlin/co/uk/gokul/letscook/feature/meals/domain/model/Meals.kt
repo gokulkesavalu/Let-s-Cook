@@ -1,31 +1,32 @@
-package co.uk.gokul.letscook.core.network.dto
-
-import kotlinx.serialization.Serializable
+package co.uk.gokul.letscook.feature.meals.domain.model
 
 /**
- * Data transfer object for the response containing detailed information about meals.
+ * Domain model representing a list of meals.
  *
- * @property meals The list of detailed meal information.
+ * @property meals The list of [Meal] objects.
  */
-@Serializable
-data class MealDetailsResponse(
-    val meals: List<MealDto>
+data class Meals(
+    val meals: List<Meal>
 )
 
 /**
- * Data transfer object representing the full details of a meal.
- *
- * This class maps directly to the response structure of TheMealDB API, containing
- * all available fields for a meal, including ingredients and measurements.
+ * Domain model representing a detailed meal.
  */
-@Serializable
-data class MealDto(
+data class Meal(
     val idMeal: String,
     val strArea: String,
     val strCategory: String,
     val strCountry: String,
     val strCreativeCommonsConfirmed: String? = null,
     val strImageSource: String,
+    val strInstructions: String,
+    val strMeal: String,
+    val strMealAlternate: String? = null,
+    val strMealThumb: String,
+    val strSource: String,
+    val strTags: String,
+    val strYoutube: String,
+    val dateModified: String? = null,
     val strIngredient1: String,
     val strIngredient10: String,
     val strIngredient11: String,
@@ -46,10 +47,6 @@ data class MealDto(
     val strIngredient7: String,
     val strIngredient8: String,
     val strIngredient9: String,
-    val strInstructions: String,
-    val strMeal: String,
-    val strMealAlternate: String? = null,
-    val strMealThumb: String,
     val strMeasure1: String,
     val strMeasure10: String,
     val strMeasure11: String,
@@ -70,8 +67,4 @@ data class MealDto(
     val strMeasure7: String,
     val strMeasure8: String,
     val strMeasure9: String,
-    val strSource: String,
-    val strTags: String,
-    val strYoutube: String,
-    val dateModified: String? = null,
 )

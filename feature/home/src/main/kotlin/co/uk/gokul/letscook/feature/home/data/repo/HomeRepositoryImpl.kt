@@ -3,7 +3,7 @@ package co.uk.gokul.letscook.feature.home.data.repo
 import co.uk.gokul.letscook.core.database.dao.AreaDao
 import co.uk.gokul.letscook.core.database.dao.CategoryDao
 import co.uk.gokul.letscook.core.database.dao.IngredientDao
-import co.uk.gokul.letscook.core.network.api.MealsService
+import co.uk.gokul.letscook.core.network.api.HomeService
 import co.uk.gokul.letscook.feature.home.data.mapper.toDomain
 import co.uk.gokul.letscook.feature.home.data.mapper.toEntity
 import co.uk.gokul.letscook.feature.home.domain.model.Areas
@@ -15,20 +15,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Implementation of [HomeRepository] that fetches data from [MealsService] with local caching.
+ * Implementation of [HomeRepository] that fetches data from [HomeService] with local caching.
  *
  * This repository implements a "Cache-First" strategy where data is served from the local database
  * if it exists and hasn't expired. Otherwise, fresh data is fetched from the network,
  * saved to the database, and then returned.
  *
- * @property mealsService The API service used to fetch meal data from the network.
+ * @property homeService The API service used to fetch meal data from the network.
  * @property categoryDao Data Access Object for category-related database operations.
  * @property areaDao Data Access Object for area-related database operations.
  * @property ingredientDao Data Access Object for ingredient-related database operations.
  * @property dbScope CoroutineScope used for background database operations (like saving fresh network data).
  */
 class HomeRepositoryImpl @Inject constructor(
-    private val mealsService: MealsService,
+    private val homeService: HomeService,
     private val categoryDao: CategoryDao,
     private val areaDao: AreaDao,
     private val ingredientDao: IngredientDao,
@@ -52,7 +52,7 @@ class HomeRepositoryImpl @Inject constructor(
             return Result.success(Categories(categories = cachedCategories.map { it.toDomain() }))
         }
         return try {
-            val categories = mealsService.getCategories()
+            val categories = homeService.getCategories()
             dbScope.launch {
                 categoryDao.addCategory(categories.categories.map { it.toEntity() })
             }
@@ -73,7 +73,7 @@ class HomeRepositoryImpl @Inject constructor(
             return Result.success(Areas(areas = cachedAreas.map { it.toDomain() }))
         }
         return try {
-            val areas = mealsService.getAreas()
+            val areas = homeService.getAreas()
             dbScope.launch {
                 areaDao.addAreas(areas.meals.map { it.toEntity() })
             }
@@ -94,7 +94,7 @@ class HomeRepositoryImpl @Inject constructor(
             return Result.success(Ingredients(ingredients = cachedIngredients.map { it.toDomain() }))
         }
         return try {
-            val ingredients = mealsService.getIngredients()
+            val ingredients = homeService.getIngredients()
             dbScope.launch {
                 ingredientDao.addIngredients(ingredients.meals.map { it.toEntity() })
             }

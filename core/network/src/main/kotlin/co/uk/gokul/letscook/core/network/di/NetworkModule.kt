@@ -1,5 +1,6 @@
 package co.uk.gokul.letscook.core.network.di
 
+import co.uk.gokul.letscook.core.network.api.HomeService
 import co.uk.gokul.letscook.core.network.api.MealsService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -71,6 +72,15 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
+    }
+
+    /**
+     * Provides an implementation of [HomeService].
+     */
+    @Provides
+    @Singleton
+    fun provideHomeService(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
     }
 
     /**

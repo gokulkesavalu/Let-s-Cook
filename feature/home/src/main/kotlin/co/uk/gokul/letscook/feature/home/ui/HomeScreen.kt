@@ -97,6 +97,9 @@ fun HomeScreen(
     }
 }
 
+/**
+ * Displays a horizontal row of ingredients.
+ */
 @Composable
 private fun IngredientsSection(
     ingredients: List<Ingredient>,
@@ -127,6 +130,9 @@ private fun IngredientsSection(
     Spacer(modifier = Modifier.height(15.dp))
 }
 
+/**
+ * Displays a horizontal row of cuisines/areas.
+ */
 @Composable
 private fun AreasSection(
     areas: List<Area>,
@@ -157,6 +163,9 @@ private fun AreasSection(
     Spacer(modifier = Modifier.height(15.dp))
 }
 
+/**
+ * Displays a horizontal row of meal categories.
+ */
 @Composable
 private fun CategoriesSection(
     categories: List<Category>,

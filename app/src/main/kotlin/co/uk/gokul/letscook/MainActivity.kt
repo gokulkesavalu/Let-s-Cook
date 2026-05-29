@@ -18,7 +18,7 @@ import co.uk.gokul.letscook.core.ui.theme.LetsCookTheme
 import co.uk.gokul.letscook.feature.home.ui.HomeScreen
 import co.uk.gokul.letscook.feature.home.ui.HomeViewModel
 import co.uk.gokul.letscook.feature.mealdetails.MealDetailsScreen
-import co.uk.gokul.letscook.feature.meals.MealsScreen
+import co.uk.gokul.letscook.feature.meals.ui.MealsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
