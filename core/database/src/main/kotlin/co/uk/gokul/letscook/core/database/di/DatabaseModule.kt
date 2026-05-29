@@ -6,6 +6,7 @@ import co.uk.gokul.letscook.core.database.LetsCookDatabase
 import co.uk.gokul.letscook.core.database.dao.AreaDao
 import co.uk.gokul.letscook.core.database.dao.CategoryDao
 import co.uk.gokul.letscook.core.database.dao.IngredientDao
+import co.uk.gokul.letscook.core.database.dao.MealDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,4 +53,11 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideCategoriesDao(db: LetsCookDatabase) = db.categoriesDao()
+
+    /**
+     * Provides the [MealDao] instance from the database.
+     */
+    @Provides
+    @Singleton
+    fun provideMealDao(db: LetsCookDatabase) = db.mealDao()
 }

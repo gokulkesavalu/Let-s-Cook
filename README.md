@@ -20,7 +20,7 @@ The project follows a **Modular Architecture** to ensure scalability, maintainab
     - **:core:ui**: Reusable UI components (like `CardItem` and `CircleCardItem`), standard Material 3 themes, typography, and Coil 3 image loading configuration.
     - **:core:navigation**: Centralized, type-safe navigation routes using Kotlin Serialization to eliminate string-based routing.
     - **:core:network**: Retrofit-based networking layer with global DTO definitions and HTTP logging.
-    - **:core:database**: Local persistence layer using Room, ensuring the app remains fully functional offline.
+    - **:core:database**: Local persistence layer using Room, ensuring the app remains fully functional offline. It features a robust caching system for categories, areas, ingredients, and detailed meal data.
 
 ## 🛠 Tech Stack
 
@@ -30,7 +30,7 @@ The project follows a **Modular Architecture** to ensure scalability, maintainab
 - **Navigation**: [Jetpack Navigation](https://developer.android.com/guide/navigation) (Type-safe with Kotlin Serialization)
 - **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
 - **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for JSON)
-- **Local Database**: [Room](https://developer.android.com/training/data-storage/room)
+- **Local Database**: [Room](https://developer.android.com/training/data-storage/room) (v2 schema)
 - **Asynchronous Flow**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & Flow
 - **Annotation Processing**: [KSP](https://kotlinlang.org/docs/ksp-overview.html) for fast and efficient code generation.
 - **Architecture**: Clean Architecture / MVVM / Repository Pattern
@@ -53,6 +53,7 @@ The project implements an **Offline-First** approach. The `HomeRepositoryImpl` u
 ## ✨ Key Features & Technical Highlights
 
 - **Parallel & Resilient Data Loading**: The Home screen fetches categories, areas, and ingredients simultaneously using `supervisorScope`. This ensures that a single failure (e.g., ingredients API down) doesn't block the entire screen from loading.
+- **Deep Ingredient Search**: Implemented a comprehensive search query in `MealDao` that scans all 20 ingredient slots in the database, ensuring that recipes are correctly discovered regardless of where the search ingredient appears in the list.
 - **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety.
 - **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` for the root container and `LazyRow` for carousels, ensuring smooth scrolling and centered progress indicators.
 - **Visual Components**:

@@ -5,18 +5,20 @@ import androidx.room.RoomDatabase
 import co.uk.gokul.letscook.core.database.dao.AreaDao
 import co.uk.gokul.letscook.core.database.dao.CategoryDao
 import co.uk.gokul.letscook.core.database.dao.IngredientDao
+import co.uk.gokul.letscook.core.database.dao.MealDao
 import co.uk.gokul.letscook.core.database.entities.AreaEntity
 import co.uk.gokul.letscook.core.database.entities.CategoryEntity
 import co.uk.gokul.letscook.core.database.entities.IngredientEntity
+import co.uk.gokul.letscook.core.database.entities.MealEntity
 
 /**
  * Main database for the Let's Cook application.
  *
- * This database provides access to categories, areas, and ingredients.
+ * This database provides access to categories, areas, ingredients, and meals.
  */
 @Database(
-    entities = [AreaEntity::class, CategoryEntity::class, IngredientEntity::class],
-    version = 1
+    entities = [AreaEntity::class, CategoryEntity::class, IngredientEntity::class, MealEntity::class],
+    version = 2
 )
 abstract class LetsCookDatabase : RoomDatabase() {
     /**
@@ -33,4 +35,9 @@ abstract class LetsCookDatabase : RoomDatabase() {
      * Provides access to [IngredientDao] for ingredient-related operations.
      */
     abstract fun ingredientsDao(): IngredientDao
+
+    /**
+     * Provides access to [MealDao] for meal-related operations.
+     */
+    abstract fun mealDao(): MealDao
 }
