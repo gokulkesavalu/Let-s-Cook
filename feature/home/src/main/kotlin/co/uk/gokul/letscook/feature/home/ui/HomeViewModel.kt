@@ -9,6 +9,7 @@ import co.uk.gokul.letscook.feature.home.domain.model.Ingredient
 import co.uk.gokul.letscook.feature.home.domain.repo.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState = _uiState.asStateFlow()
+    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
         loadHomeData()
@@ -48,7 +49,7 @@ class HomeViewModel @Inject constructor(
      */
     private suspend fun loadCategories() {
         try {
-            _uiState.update { it.copy(isCategoriesLoading = true) }
+            _uiState.update { it.copy(isCategoriesLoading = true, categoriesError = null) }
             homeRepository.getCategories()
                 .onSuccess { categories ->
                     _uiState.update { it.copy(categories = categories.categories) }
@@ -70,7 +71,7 @@ class HomeViewModel @Inject constructor(
      */
     private suspend fun loadAreas() {
         try {
-            _uiState.update { it.copy(isAreasLoading = true) }
+            _uiState.update { it.copy(isAreasLoading = true, areasError = null) }
             homeRepository.getAreas()
                 .onSuccess { areas ->
                     _uiState.update { it.copy(areas = areas.areas) }
@@ -92,7 +93,7 @@ class HomeViewModel @Inject constructor(
      */
     private suspend fun loadIngredients() {
         try {
-            _uiState.update { it.copy(isIngredientsLoading = true) }
+            _uiState.update { it.copy(isIngredientsLoading = true, ingredientsError = null) }
             homeRepository.getIngredients()
                 .onSuccess { ingredients ->
                     _uiState.update {
