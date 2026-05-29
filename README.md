@@ -10,14 +10,14 @@ Let's Cook is designed to showcase modern Android development practices, includi
 
 The project follows a **Modular Architecture** to ensure scalability, maintainability, and strict separation of concerns.
 
-- **:app**: The main entry point. Orchestrates top-level navigation, dependency injection configuration, and theme initialization.
+- **:app**: The main application entry point. Orchestrates top-level navigation, dependency injection configuration, and theme initialization.
 - **:feature**: Contains isolated, feature-specific modules following the MVVM pattern.
     - **:feature:home**: The main landing screen. Features categorized lists, regional cuisines, and ingredients loaded in parallel.
     - **:feature:meals**: Displays a list of recipes filtered by category, area, or ingredient.
     - **:feature:mealdetails**: Provides a comprehensive view of a specific recipe, including instructions and measurements.
 - **:core**: Shared modules providing foundational logic and UI components.
     - **:core:common**: Low-level utilities and pure Kotlin logic (e.g., Flag Emoji mapping utilities).
-    - **:core:ui**: Shared UI components (like `CardItem` and `CircleCardItem`), standard Material 3 themes, typography, and Coil 3 image loading configuration.
+    - **:core:ui**: Reusable UI components (like `CardItem` and `CircleCardItem`), standard Material 3 themes, typography, and Coil 3 image loading configuration.
     - **:core:navigation**: Centralized, type-safe navigation routes using Kotlin Serialization to eliminate string-based routing.
     - **:core:network**: Retrofit-based networking layer with global DTO definitions and HTTP logging.
     - **:core:database**: Local persistence layer using Room, ensuring the app remains fully functional offline.
@@ -32,6 +32,7 @@ The project follows a **Modular Architecture** to ensure scalability, maintainab
 - **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for JSON)
 - **Local Database**: [Room](https://developer.android.com/training/data-storage/room)
 - **Asynchronous Flow**: [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & Flow
+- **Annotation Processing**: [KSP](https://kotlinlang.org/docs/ksp-overview.html) for fast and efficient code generation.
 - **Architecture**: Clean Architecture / MVVM / Repository Pattern
 
 ## 📐 Architecture Overview
@@ -57,6 +58,9 @@ The project implements an **Offline-First** approach. The `HomeRepositoryImpl` u
 - **Visual Components**:
     - **`CircleCardItem`**: Specialized circular component for displaying ingredients, cuisines, or categories with high-impact visuals.
     - **`CardItem`**: Versatile card component with Coil-powered image loading.
+- **Performance Optimizations**: 
+    - Used `@Immutable` on UI state classes to assist Compose compiler optimizations.
+    - Utilized `collectAsStateWithLifecycle()` for lifecycle-aware state collection, reducing unnecessary resources when the app is in the background.
 - **Granular Error Handling**: The UI state tracks loading and errors for each data type independently, allowing users to interact with successful sections even if one part fails.
 - **Smart Data Mapping**: Rigorous mapping between network DTOs, database Entities, and Domain models ensures data integrity.
 - **Modern Design System & Branding**: 
