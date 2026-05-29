@@ -25,8 +25,8 @@ separation of concerns.
 - **:core**: Shared modules providing foundational logic and UI components.
     - **:core:common**: Low-level utilities and pure Kotlin logic (e.g., Flag Emoji mapping
       utilities).
-    - **:core:ui**: Reusable UI components (like `AreaItem`), standard Material 3 themes, and
-      typography.
+    - **:core:ui**: Shared UI components (like `AreaItem`), standard Material 3 themes, typography, 
+      and image loading configuration.
     - **:core:navigation**: Centralized, type-safe navigation routes using Kotlin Serialization to
       eliminate string-based routing.
     - **:core:network**: Retrofit-based networking layer with global DTO definitions and logging.
@@ -37,10 +37,11 @@ separation of concerns.
 
 - **Language**: [Kotlin](https://kotlinlang.org/) (2.2.10)
 - **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3
+- **Image Loading**: [Coil](https://coil-kt.github.io/coil/) (3.x) for optimized, lifecycle-aware 
+  image loading.
 - **Navigation**: [Jetpack Navigation](https://developer.android.com/guide/navigation) (Type-safe
   with Kotlin Serialization)
-- **Dependency Injection
-  **: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
+- **Dependency Injection**: [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (2.59.2)
 - **Networking**: [Retrofit](https://square.github.io/retrofit/) & OkHttp (Kotlin Serialization for
   JSON)
 - **Local Database**: [Room](https://developer.android.com/training/data-storage/room)
@@ -61,8 +62,8 @@ independent of the UI and external data sources.
 
 ### 💾 Repository & Caching Strategy
 
-The project implements an **Offline-First** approach. For example, `HomeRepositoryImpl` uses a *
-*Cache-First** strategy:
+The project implements an **Offline-First** approach. For example, `HomeRepositoryImpl` uses a
+**Cache-First** strategy:
 
 * Requests are first checked against the local Room database.
 * Data is considered valid for **15 minutes** (configurable).
@@ -76,6 +77,10 @@ The project implements an **Offline-First** approach. For example, `HomeReposito
   down) doesn't block the entire screen from loading.
 - **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes
   and arguments are defined as `@Serializable` data classes.
+- **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` and 
+  `LazyRow` for smooth scrolling across large datasets.
+- **Image Caching & Loading**: Integrated **Coil 3** for efficient image loading and caching across
+  the UI, specifically within the `CardItem` components.
 - **Granular Loading & Error States**: The UI state tracks loading and errors for each data type
   independently, allowing for a more responsive and informative user experience.
 - **Smart Data Mapping**: Rigorous mapping between network DTOs, database Entities, and Domain
