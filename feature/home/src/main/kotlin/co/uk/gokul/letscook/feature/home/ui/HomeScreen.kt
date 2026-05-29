@@ -115,7 +115,7 @@ private fun IngredientsSection(
             .height(300.dp)
             .fillMaxWidth()
     ) {
-        items(ingredients) { ingredient ->
+        items(items = ingredients, key = { it.idIngredient }) { ingredient ->
             CardItem(
                 title = ingredient.strIngredient,
                 description = ingredient.strDescription,
@@ -145,7 +145,7 @@ private fun AreasSection(
             .height(300.dp)
             .fillMaxWidth()
     ) {
-        items(areas) { area ->
+        items(items = areas, key = { it.strArea }) { area ->
             CircleCardItem(
                 areaName = area.strArea,
                 countryName = area.strCountry,
@@ -175,7 +175,7 @@ private fun CategoriesSection(
             .height(300.dp)
             .fillMaxWidth()
     ) {
-        items(categories) { category ->
+        items(items = categories, key = { it.idCategory }) { category ->
             CardItem(
                 title = category.strCategory,
                 description = category.strCategoryDescription,
