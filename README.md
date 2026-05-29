@@ -17,7 +17,7 @@ The project follows a **Modular Architecture** to ensure scalability, maintainab
     - **:feature:mealdetails**: Provides a comprehensive view of a specific recipe, including instructions and measurements.
 - **:core**: Shared modules providing foundational logic and UI components.
     - **:core:common**: Low-level utilities and pure Kotlin logic (e.g., Flag Emoji mapping utilities).
-    - **:core:ui**: Shared UI components (like `AreaItem` and `CardItem`), standard Material 3 themes, typography, and Coil 3 image loading configuration.
+    - **:core:ui**: Shared UI components (like `CardItem` and `CircleCardItem`), standard Material 3 themes, typography, and Coil 3 image loading configuration.
     - **:core:navigation**: Centralized, type-safe navigation routes using Kotlin Serialization to eliminate string-based routing.
     - **:core:network**: Retrofit-based networking layer with global DTO definitions and HTTP logging.
     - **:core:database**: Local persistence layer using Room, ensuring the app remains fully functional offline.
@@ -53,15 +53,16 @@ The project implements an **Offline-First** approach. The `HomeRepositoryImpl` u
 
 - **Parallel & Resilient Data Loading**: The Home screen fetches categories, areas, and ingredients simultaneously using `supervisorScope`. This ensures that a single failure (e.g., ingredients API down) doesn't block the entire screen from loading.
 - **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety.
-- **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` and `LazyRow` for smooth scrolling across large datasets, with progress indicators centered for better UX.
-- **Granular Error Handling**: The UI state tracks loading and errors for each data type independently (Categories, Areas, Ingredients), allowing users to interact with successful sections even if one part fails.
-- **Smart Data Mapping**: Rigorous mapping between network DTOs, database Entities, and Domain models ensures data integrity and prevents internal leakages into the UI layer.
+- **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` for the root container and `LazyRow` for carousels, ensuring smooth scrolling and centered progress indicators.
+- **Visual Components**:
+    - **`CircleCardItem`**: Specialized circular component for displaying ingredients, cuisines, or categories with high-impact visuals.
+    - **`CardItem`**: Versatile card component with Coil-powered image loading.
+- **Granular Error Handling**: The UI state tracks loading and errors for each data type independently, allowing users to interact with successful sections even if one part fails.
+- **Smart Data Mapping**: Rigorous mapping between network DTOs, database Entities, and Domain models ensures data integrity.
 - **Modern Design System & Branding**: 
-    - Full Material 3 integration with Light/Dark modes and dynamic colors.
-    - Custom stylized branding with a centered logo in the Home top bar.
-    - Fully configured adaptive icons (Launcher & Play Store ready).
-- **Database Integrity**: Refined Room entity naming and primary key configurations to resolve KSP conflicts and ensure schema stability.
-- **Comprehensive Documentation**: Every class, function, and property in the project is documented using KDoc, following standard Kotlin practices for maximum maintainability.
+    - Full Material 3 integration with Light/Dark modes.
+    - Custom branding with a centered logo in the top bar.
+    - Fully configured adaptive icons.
 
 ## 🏁 Getting Started
 

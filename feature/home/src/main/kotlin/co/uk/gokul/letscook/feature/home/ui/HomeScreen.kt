@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.uk.gokul.letscook.core.ui.R
-import co.uk.gokul.letscook.core.ui.components.AreaItem
 import co.uk.gokul.letscook.core.ui.components.CardItem
+import co.uk.gokul.letscook.core.ui.components.CircleCardItem
 import co.uk.gokul.letscook.feature.home.domain.model.Area
 import co.uk.gokul.letscook.feature.home.domain.model.Category
 import co.uk.gokul.letscook.feature.home.domain.model.Ingredient
@@ -146,7 +146,7 @@ private fun AreasSection(
             .fillMaxWidth()
     ) {
         items(areas) { area ->
-            AreaItem(
+            CircleCardItem(
                 areaName = area.strArea,
                 countryName = area.strCountry,
                 onClick = { onAreaClick(area) },
