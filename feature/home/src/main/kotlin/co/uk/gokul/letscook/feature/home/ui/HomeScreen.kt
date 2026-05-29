@@ -29,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import co.uk.gokul.letscook.core.ui.R
 import co.uk.gokul.letscook.core.ui.components.AreaItem
 import co.uk.gokul.letscook.core.ui.components.CardItem
+import co.uk.gokul.letscook.feature.home.domain.model.Area
+import co.uk.gokul.letscook.feature.home.domain.model.Category
+import co.uk.gokul.letscook.feature.home.domain.model.Ingredient
 
 /**
  * The landing screen of the application.
@@ -68,93 +71,22 @@ fun HomeScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(10.dp)
             ) {
-                item {
-                    if (uiState.categories.isNotEmpty()) {
-                        Text(
-                            text = "Categories",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        LazyRow(
-                            modifier = Modifier
-                                .height(300.dp)
-                                .fillMaxWidth()
-                                .padding(10.dp)
-                        ) {
-                            items(uiState.categories) { category ->
-                                CardItem(
-                                    title = category.strCategory,
-                                    description = category.strCategoryDescription,
-                                    imageUrl = category.strCategoryThumb,
-                                    modifier = Modifier.padding(10.dp),
-                                    onClick = { }
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(15.dp))
+                if (uiState.categories.isNotEmpty()) {
+                    item {
+                        CategoriesSection(uiState.categories, onCategoryClick = {})
                     }
                 }
-                item {
-                    if (uiState.areas.isNotEmpty()) {
-                        Text(
-                            text = "Cuisines",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        LazyRow(
-                            modifier = Modifier
-                                .height(300.dp)
-                                .fillMaxWidth()
-                                .padding(10.dp)
-                        ) {
-                            items(uiState.areas) { area ->
-                                AreaItem(
-                                    areaName = area.strArea,
-                                    countryName = area.strCountry,
-                                    onClick = {},
-                                    modifier = Modifier.padding(10.dp)
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(15.dp))
+                if (uiState.areas.isNotEmpty()) {
+                    item {
+                        AreasSection(uiState.areas, onAreaClick = {})
                     }
                 }
-                item {
-                    if (uiState.ingredients.isNotEmpty()) {
-                        Text(
-                            text = "Ingredients",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        LazyRow(
-                            modifier = Modifier
-                                .height(300.dp)
-                                .fillMaxWidth()
-                                .padding(10.dp)
-                        ) {
-                            items(uiState.ingredients) { ingredient ->
-                                CardItem(
-                                    title = ingredient.strIngredient,
-                                    description = ingredient.strDescription,
-                                    modifier = Modifier
-                                        .padding(10.dp)
-                                        .height(300.dp)
-                                        .fillMaxWidth(),
-                                    onClick = { }
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(15.dp))
+
+                if (uiState.ingredients.isNotEmpty()) {
+                    item {
+                        IngredientsSection(uiState.ingredients, onIngredientClick = {})
                     }
                 }
             }
@@ -163,4 +95,95 @@ fun HomeScreen(
             }
         }
     }
+}
+
+@Composable
+private fun IngredientsSection(
+    ingredients: List<Ingredient>,
+    onIngredientClick: (Ingredient) -> Unit,
+) {
+    Text(
+        text = "Ingredients",
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+    LazyRow(
+        modifier = Modifier
+            .height(300.dp)
+            .fillMaxWidth()
+    ) {
+        items(ingredients) { ingredient ->
+            CardItem(
+                title = ingredient.strIngredient,
+                description = ingredient.strDescription,
+                modifier = Modifier.padding(10.dp),
+                onClick = { onIngredientClick(ingredient) }
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(15.dp))
+}
+
+@Composable
+private fun AreasSection(
+    areas: List<Area>,
+    onAreaClick: (Area) -> Unit,
+) {
+    Text(
+        text = "Cuisines",
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+    LazyRow(
+        modifier = Modifier
+            .height(300.dp)
+            .fillMaxWidth()
+    ) {
+        items(areas) { area ->
+            AreaItem(
+                areaName = area.strArea,
+                countryName = area.strCountry,
+                onClick = { onAreaClick(area) },
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(15.dp))
+}
+
+@Composable
+private fun CategoriesSection(
+    categories: List<Category>,
+    onCategoryClick: (Category) -> Unit,
+) {
+    Text(
+        text = "Categories",
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+    LazyRow(
+        modifier = Modifier
+            .height(300.dp)
+            .fillMaxWidth()
+    ) {
+        items(categories) { category ->
+            CardItem(
+                title = category.strCategory,
+                description = category.strCategoryDescription,
+                imageUrl = category.strCategoryThumb,
+                modifier = Modifier.padding(10.dp),
+                onClick = { onCategoryClick(category) }
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(15.dp))
 }
