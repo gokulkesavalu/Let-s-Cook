@@ -90,10 +90,9 @@ fun HomeScreen(
                                     title = category.strCategory,
                                     description = category.strCategoryDescription,
                                     imageUrl = category.strCategoryThumb,
-                                    modifier = Modifier.padding(10.dp)
-                                ) {
-
-                                }
+                                    modifier = Modifier.padding(10.dp),
+                                    onClick = { }
+                                )
                             }
                         }
                         Spacer(modifier = Modifier.height(15.dp))
@@ -150,10 +149,9 @@ fun HomeScreen(
                                     modifier = Modifier
                                         .padding(10.dp)
                                         .height(300.dp)
-                                        .fillMaxWidth()
-                                ) {
-
-                                }
+                                        .fillMaxWidth(),
+                                    onClick = { }
+                                )
                             }
                         }
                         Spacer(modifier = Modifier.height(15.dp))
