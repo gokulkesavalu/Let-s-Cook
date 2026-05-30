@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey
  * @property strCategory Name of the category (e.g., "Beef", "Vegetarian").
  * @property strCategoryDescription Detailed description of the category.
  * @property strCategoryThumb URL to the category's thumbnail image.
+ * @property cachedAt The timestamp when this entity was cached in the database.
  */
 @Entity(tableName = "categories")
 data class CategoryEntity(

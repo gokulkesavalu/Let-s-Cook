@@ -55,7 +55,9 @@ The project implements an **Offline-First** approach with a robust **Cache-First
 - **Parallel & Resilient Data Loading**: The Home screen fetches categories, areas, and ingredients simultaneously using `supervisorScope`. This ensures that a single failure (e.g., ingredients API down) doesn't block the entire screen from loading.
 - **Deep Ingredient Search**: Implemented a comprehensive search query in `MealDao` that scans all 20 ingredient slots in the database, ensuring that recipes are correctly discovered regardless of where the search ingredient appears in the list.
 - **Centralized Asynchrony**: Utilizes a single, Hilt-provided `CoroutineScope` with a `SupervisorJob` for persistent background tasks (like cache updates), preventing duplicate bindings and ensuring consistent lifecycle management across modules.
-- **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety.
+- **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety and simplified argument passing.
+- **Process Death Resilience**: ViewModels utilize `SavedStateHandle` to persist UI state (like active filters) across process death, ensuring a seamless user experience even if the system reclaims resources.
+- **Strict Documentation Standards**: The entire codebase follows rigorous KDoc standards, ensuring that all public APIs, data models, and complex internal logic are fully documented for maximum maintainability.
 - **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` for the root container and `LazyRow` for carousels, ensuring smooth scrolling and centered progress indicators.
 - **Visual Components**:
     - **`CircleCardItem`**: Specialized circular component for displaying ingredients, cuisines, or categories with high-impact visuals.
@@ -69,6 +71,13 @@ The project implements an **Offline-First** approach with a robust **Cache-First
     - Full Material 3 integration with Light/Dark modes.
     - Custom branding with a centered logo in the top bar.
     - Fully configured adaptive icons.
+
+## 🛠 Best Practices Followed
+
+- **SOLID Principles**: Focused on single responsibility and interface segregation (especially in Repository and Service layers).
+- **DRY (Don't Repeat Yourself)**: Leveraged generic helper functions and shared core modules to minimize code duplication.
+- **Fail-Fast & Resilience**: Used `supervisorScope` and comprehensive `Result` wrapping to handle failures gracefully without crashing the application.
+- **Dependency Inversion**: High usage of Hilt for constructor injection, ensuring the project remains testable and decoupled.
 
 ## 🏁 Getting Started
 

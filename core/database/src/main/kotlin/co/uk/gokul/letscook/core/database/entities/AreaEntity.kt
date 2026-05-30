@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
  *
  * @property strArea Name of the area (e.g., "British", "Chinese").
  * @property strCountry Country associated with the area.
+ * @property cachedAt The timestamp when this entity was cached in the database.
  */
 @Entity(tableName = "areas")
 data class AreaEntity(

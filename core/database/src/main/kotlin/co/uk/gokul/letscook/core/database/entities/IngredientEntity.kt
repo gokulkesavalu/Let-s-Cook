@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey
  * @property strIngredient Name of the ingredient (e.g., "Chicken", "Salt").
  * @property strDescription Optional description of the ingredient.
  * @property strType Optional type or category of the ingredient.
+ * @property cachedAt The timestamp when this entity was cached in the database.
  */
 @Entity(tableName = "ingredients")
 data class IngredientEntity(
