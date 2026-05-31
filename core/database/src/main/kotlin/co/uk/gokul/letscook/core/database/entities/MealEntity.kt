@@ -18,6 +18,7 @@ import androidx.room.PrimaryKey
  * @property strTags Comma-separated tags associated with the meal.
  * @property strYoutube URL to a YouTube video of the meal preparation.
  * @property strSource URL to the original source of the recipe.
+ * @property cachedAt The timestamp when this entity was cached in the database.
  */
 @Entity(tableName = "meals")
 data class MealEntity(

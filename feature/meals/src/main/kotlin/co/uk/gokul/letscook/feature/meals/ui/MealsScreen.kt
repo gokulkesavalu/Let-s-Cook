@@ -31,7 +31,7 @@ import co.uk.gokul.letscook.core.ui.components.CardItem
  * Screen that displays a list of meals.
  *
  * @param title The title to display in the top bar.
- * @param viewModel The ViewModel providing the UI state.
+ * @param uiState The Meals UI state.
  * @param onBackClick Callback for navigating back.
  * @param onMealClick Callback for navigating to meal details.
  */
