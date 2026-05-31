@@ -25,6 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Main activity of the application, responsible for hosting the navigation graph.
+ *
+ * This activity uses Jetpack Compose Navigation with Kotlin Serialization for type-safe
+ * route handling. It orchestrates navigation between the Home, Meals, and Meal Details screens.
+ *
  * Annotated with [AndroidEntryPoint] to enable Hilt dependency injection.
  */
 @AndroidEntryPoint
@@ -39,6 +43,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = navController, startDestination = Screen.Home) {
+                        // Home Screen Route
                         composable<Screen.Home> {
                             val viewModel = hiltViewModel<HomeViewModel>()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -55,6 +60,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+
+                        // Meals List Screen Route
                         composable<Screen.Meals> { backStackEntry ->
                             val viewModel = hiltViewModel<MealsViewModel>()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -68,6 +75,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
+
+                        // Meal Details Screen Route
                         composable<Screen.MealDetails> { backStackEntry ->
                             val route = backStackEntry.toRoute<Screen.MealDetails>()
                             MealDetailsScreen(mealId = route.mealId)

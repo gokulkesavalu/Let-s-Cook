@@ -1,5 +1,6 @@
 package co.uk.gokul.letscook.core.network.api
 
+import co.uk.gokul.letscook.core.network.dto.MealDetailsResponse
 import co.uk.gokul.letscook.core.network.dto.MealsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -34,4 +35,13 @@ interface MealsService {
      */
     @GET("filter.php")
     suspend fun getMealsByIngredient(@Query("i") ingredient: String): MealsResponse
+
+    /**
+     * Fetches detailed information for a specific meal by its ID.
+     *
+     * @param idMeal The unique identifier of the meal.
+     * @return [MealDetailsResponse] containing the full details of the meal.
+     */
+    @GET("lookup.php")
+    suspend fun getMealsById(@Query("i") idMeal: String): MealDetailsResponse
 }

@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * Dagger module for home-related dependencies.
+ * Dagger module for meals-related dependencies.
  * This module is installed in [SingletonComponent].
  */
 @Module
