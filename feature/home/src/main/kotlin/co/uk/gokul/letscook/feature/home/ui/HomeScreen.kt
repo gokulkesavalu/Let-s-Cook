@@ -75,18 +75,37 @@ fun HomeScreen(
             ) {
                 if (uiState.categories.isNotEmpty()) {
                     item {
-                        CategoriesSection(uiState.categories, onCategoryClick = {})
+                        CategoriesSection(
+                            categories = uiState.categories,
+                            onCategoryClick = { category ->
+                                onNavigateToMeals(category.strCategory, "c", category.strCategory)
+                            }
+                        )
                     }
                 }
                 if (uiState.areas.isNotEmpty()) {
                     item {
-                        AreasSection(uiState.areas, onAreaClick = {})
+                        AreasSection(
+                            areas = uiState.areas,
+                            onAreaClick = { area ->
+                                onNavigateToMeals(area.strCountry, "a", area.strCountry)
+                            }
+                        )
                     }
                 }
 
                 if (uiState.ingredients.isNotEmpty()) {
                     item {
-                        IngredientsSection(uiState.ingredients, onIngredientClick = {})
+                        IngredientsSection(
+                            ingredients = uiState.ingredients,
+                            onIngredientClick = { ingredient ->
+                                onNavigateToMeals(
+                                    ingredient.strIngredient,
+                                    "i",
+                                    ingredient.strIngredient
+                                )
+                            }
+                        )
                     }
                 }
             }

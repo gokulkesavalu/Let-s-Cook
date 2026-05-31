@@ -38,7 +38,7 @@ interface MealDao {
      * @param area The name of the area (e.g., "Italian").
      * @return A list of [MealEntity] objects, ordered by most recently cached.
      */
-    @Query("SELECT * FROM meals WHERE strArea = :area ORDER BY cachedAt DESC")
+    @Query("SELECT * FROM meals WHERE strCountry = :area ORDER BY cachedAt DESC")
     suspend fun getMealsByArea(area: String): List<MealEntity>
 
     /**
@@ -48,7 +48,8 @@ interface MealDao {
      * @param ingredient The name of the ingredient to search for.
      * @return A list of [MealEntity] objects containing the ingredient.
      */
-    @Query("""
+    @Query(
+        """
         SELECT * FROM meals 
         WHERE strIngredient1 = :ingredient OR strIngredient2 = :ingredient OR strIngredient3 = :ingredient 
         OR strIngredient4 = :ingredient OR strIngredient5 = :ingredient OR strIngredient6 = :ingredient 
@@ -58,6 +59,7 @@ interface MealDao {
         OR strIngredient16 = :ingredient OR strIngredient17 = :ingredient OR strIngredient18 = :ingredient 
         OR strIngredient19 = :ingredient OR strIngredient20 = :ingredient
         ORDER BY cachedAt DESC
-    """)
+    """
+    )
     suspend fun getMealsByIngredient(ingredient: String): List<MealEntity>
 }

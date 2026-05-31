@@ -48,7 +48,7 @@ The application is built on **Clean Architecture** principles to ensure business
 The project implements an **Offline-First** approach with a robust **Cache-First** strategy:
 * **SSOT (Single Source of Truth)**: Data is always served from the local Room database if the cache is valid.
 * **Cache Validation**: Data is considered valid for **15 minutes**.
-* **Generic Data Fetching**: Implemented a refactored, generic `fetchData` helper in the repositories to handle the complex flow of checking cache, fetching from network, and updating the database in the background, ensuring high code reuse and maintainability.
+* **Generic Data Fetching & Enrichment**: Implemented a refactored, generic `fetchData` helper in the repositories to handle the complex flow of checking cache, fetching from network, and "enriching" the data with missing filter metadata (like categories/areas) before persisting to the database. This ensures high code reuse and a searchable offline cache.
 
 ## ✨ Key Features & Technical Highlights
 
@@ -56,7 +56,8 @@ The project implements an **Offline-First** approach with a robust **Cache-First
 - **Deep Ingredient Search**: Implemented a comprehensive search query in `MealDao` that scans all 20 ingredient slots in the database, ensuring that recipes are correctly discovered regardless of where the search ingredient appears in the list.
 - **Centralized Asynchrony**: Utilizes a single, Hilt-provided `CoroutineScope` with a `SupervisorJob` for persistent background tasks (like cache updates), preventing duplicate bindings and ensuring consistent lifecycle management across modules.
 - **Type-Safe Navigation**: Completely removed "magic strings" from the navigation graph. All routes and arguments are defined as `@Serializable` data classes, providing compile-time safety and simplified argument passing.
-- **Process Death Resilience**: ViewModels utilize `SavedStateHandle` to persist UI state (like active filters) across process death, ensuring a seamless user experience even if the system reclaims resources.
+- **Process Death Resilience**: ViewModels utilize `SavedStateHandle` combined with `Parcelable` domain models to persist UI state (like active filters) across process death, ensuring a seamless user experience even if the system reclaims resources.
+- **Robust API Handling**: The `MealDto` is designed with default values and nullability to gracefully handle both partial "Filter API" responses and full "Detail API" responses without serialization errors.
 - **Strict Documentation Standards**: The entire codebase follows rigorous KDoc standards, ensuring that all public APIs, data models, and complex internal logic are fully documented for maximum maintainability.
 - **Optimized UI (Lazy Loading)**: Implemented performance-optimized layouts using `LazyColumn` for the root container and `LazyRow` for carousels, ensuring smooth scrolling and centered progress indicators.
 - **Visual Components**:

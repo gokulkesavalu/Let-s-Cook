@@ -3,6 +3,7 @@ package co.uk.gokul.letscook.feature.meals.data.repo
 import co.uk.gokul.letscook.core.database.dao.MealDao
 import co.uk.gokul.letscook.core.database.entities.MealEntity
 import co.uk.gokul.letscook.core.network.api.MealsService
+import co.uk.gokul.letscook.core.network.dto.MealDto
 import co.uk.gokul.letscook.core.network.dto.MealsResponse
 import co.uk.gokul.letscook.feature.meals.data.mapper.toDomain
 import co.uk.gokul.letscook.feature.meals.data.mapper.toEntity
@@ -48,17 +49,29 @@ class MealsRepositoryImpl @Inject constructor(
         return when (filter) {
             is MealFilter.Category -> fetchData(
                 fetchFromNetwork = { mealsService.getMealsByCategory(filter.value) },
-                fetchFromDatabase = { mealDao.getMealsByCategory(filter.value) }
+                fetchFromDatabase = { mealDao.getMealsByCategory(filter.value) },
+                mapToEntity = { meals -> meals.map { it.toEntity(category = filter.value) } },
+                mapToDomain = { response -> response.toDomain(category = filter.value) }
             )
 
             is MealFilter.Area -> fetchData(
                 fetchFromNetwork = { mealsService.getMealsByArea(filter.value) },
-                fetchFromDatabase = { mealDao.getMealsByArea(filter.value) }
+                fetchFromDatabase = { mealDao.getMealsByArea(filter.value) },
+                mapToEntity = { meals -> meals.map { it.toEntity(area = filter.value) } },
+                mapToDomain = { response -> response.toDomain(area = filter.value) }
             )
 
             is MealFilter.Ingredient -> fetchData(
                 fetchFromNetwork = { mealsService.getMealsByIngredient(filter.value) },
-                fetchFromDatabase = { mealDao.getMealsByIngredient(filter.value) }
+                fetchFromDatabase = { mealDao.getMealsByIngredient(filter.value) },
+                mapToEntity = { meals ->
+                    meals.map {
+                        // For ingredients, the API doesn't tell us which of the 20 slots it occupies.
+                        // We set it to the first slot so the cache query (which checks all 20) can find it.
+                        it.toEntity().copy(strIngredient1 = filter.value)
+                    }
+                },
+                mapToDomain = { response -> response.toDomain() }
             )
         }
     }
@@ -68,11 +81,15 @@ class MealsRepositoryImpl @Inject constructor(
      *
      * @param fetchFromNetwork Lambda to fetch data from the remote API.
      * @param fetchFromDatabase Lambda to fetch data from the local database.
+     * @param mapToEntity Lambda to map network DTOs to database entities.
+     * @param mapToDomain Lambda to map network response to domain model.
      * @return A [Result] containing the [Meals] domain model.
      */
     private suspend fun fetchData(
         fetchFromNetwork: suspend () -> MealsResponse,
-        fetchFromDatabase: suspend () -> List<MealEntity>
+        fetchFromDatabase: suspend () -> List<MealEntity>,
+        mapToEntity: (List<MealDto>) -> List<MealEntity>,
+        mapToDomain: (MealsResponse) -> Meals
     ): Result<Meals> {
         val cachedMeals = fetchFromDatabase()
         if (isCacheValid(cachedMeals)) {
@@ -81,10 +98,12 @@ class MealsRepositoryImpl @Inject constructor(
 
         return try {
             val networkResponse = fetchFromNetwork()
-            dbScope.launch {
-                mealDao.addMeals(networkResponse.meals.map { it.toEntity() })
+            networkResponse.meals?.let { meals ->
+                dbScope.launch {
+                    mealDao.addMeals(mapToEntity(meals))
+                }
             }
-            Result.success(networkResponse.toDomain())
+            Result.success(mapToDomain(networkResponse))
         } catch (e: Exception) {
             Result.failure(e)
         }

@@ -8,18 +8,24 @@ import co.uk.gokul.letscook.feature.meals.domain.model.Meals
 
 /**
  * Maps [MealsResponse] DTO to [Meals] domain model.
+ *
+ * @param category Optional category to populate in domain models.
+ * @param area Optional area to populate in domain models.
  */
-fun MealsResponse.toDomain() = Meals(
-    meals = this.meals.map { it.toDomain() }
+fun MealsResponse.toDomain(category: String? = null, area: String? = null) = Meals(
+    meals = this.meals?.map { it.toDomain(category, area) } ?: emptyList()
 )
 
 /**
  * Maps [MealDto] DTO to [Meal] domain model.
+ *
+ * @param category Optional category to override the DTO value.
+ * @param area Optional area to override the DTO value.
  */
-fun MealDto.toDomain() = Meal(
+fun MealDto.toDomain(category: String? = null, area: String? = null) = Meal(
     idMeal = this.idMeal,
-    strArea = this.strArea,
-    strCategory = this.strCategory,
+    strArea = if (this.strArea.isBlank() && area != null) area else this.strArea,
+    strCategory = if (this.strCategory.isBlank() && category != null) category else this.strCategory,
     strCountry = this.strCountry,
     strCreativeCommonsConfirmed = this.strCreativeCommonsConfirmed,
     strImageSource = this.strImageSource,
@@ -75,11 +81,17 @@ fun MealDto.toDomain() = Meal(
 
 /**
  * Maps [MealDto] DTO to [MealEntity] database entity.
+ *
+ * This function handles populating filter metadata (category/area) that may be missing
+ * from the API's lightweight filtering responses.
+ *
+ * @param category Optional category to override the DTO value.
+ * @param area Optional area to override the DTO value.
  */
-fun MealDto.toEntity() = MealEntity(
+fun MealDto.toEntity(category: String? = null, area: String? = null) = MealEntity(
     idMeal = this.idMeal,
-    strArea = this.strArea,
-    strCategory = this.strCategory,
+    strArea = if (this.strArea.isBlank() && area != null) area else this.strArea,
+    strCategory = if (this.strCategory.isBlank() && category != null) category else this.strCategory,
     strCountry = this.strCountry,
     strCreativeCommonsConfirmed = this.strCreativeCommonsConfirmed,
     strImageSource = this.strImageSource,

@@ -35,12 +35,28 @@ class MealsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val filter = savedStateHandle.getStateFlow<MealFilter?>("filter", null)
+    private val _filter = savedStateHandle.getStateFlow<MealFilter?>("filter", null)
+
+    init {
+        if (_filter.value == null) {
+            val filterType = savedStateHandle.get<String>("filterType")
+            val filterValue = savedStateHandle.get<String>("filterValue")
+            if (filterType != null && filterValue != null) {
+                val initialFilter = when (filterType) {
+                    "c" -> MealFilter.Category(filterValue)
+                    "a" -> MealFilter.Area(filterValue)
+                    "i" -> MealFilter.Ingredient(filterValue)
+                    else -> null
+                }
+                initialFilter?.let { setFilter(it) }
+            }
+        }
+    }
 
     /**
      * The current UI state of the meals screen, reactive to changes in the filter.
      */
-    val uiState: StateFlow<MealsUiState> = filter
+    val uiState: StateFlow<MealsUiState> = _filter
         .filterNotNull()
         .distinctUntilChanged()
         .flatMapLatest { filter ->
