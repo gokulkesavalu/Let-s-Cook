@@ -42,7 +42,11 @@ import co.uk.gokul.letscook.feature.home.domain.model.Ingredient
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
-    onNavigateToMeals: (String, String, String) -> Unit = { _, _, _ -> }
+    onNavigateToMeals: (
+        title: String,
+        filterType: String,
+        filterValue: String
+    ) -> Unit
 ) {
     Scaffold(
         topBar = {

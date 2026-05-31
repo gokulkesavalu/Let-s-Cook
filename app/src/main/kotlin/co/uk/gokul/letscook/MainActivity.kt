@@ -44,8 +44,14 @@ class MainActivity : ComponentActivity() {
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                             HomeScreen(
                                 uiState = uiState,
-                                onNavigateToMeals = { title, type, value ->
-                                    navController.navigate(Screen.Meals(title, type, value))
+                                onNavigateToMeals = { title, filterType, filterValue ->
+                                    navController.navigate(
+                                        Screen.Meals(
+                                            title,
+                                            filterType,
+                                            filterValue
+                                        )
+                                    )
                                 }
                             )
                         }
