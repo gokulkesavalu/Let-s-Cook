@@ -62,4 +62,13 @@ interface MealDao {
     """
     )
     suspend fun getMealsByIngredient(ingredient: String): List<MealEntity>
+
+    /**
+     * Retrieves the full details of a specific meal by its ID from the cache.
+     *
+     * @param idMeal The unique identifier of the meal.
+     * @return A list of [MealEntity] objects matching the ID (typically one or empty).
+     */
+    @Query("SELECT * from meals where idMeal = :idMeal")
+    suspend fun getMealsById(idMeal: String): List<MealEntity>
 }

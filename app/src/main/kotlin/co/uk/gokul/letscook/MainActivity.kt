@@ -18,7 +18,8 @@ import co.uk.gokul.letscook.core.navigation.Screen
 import co.uk.gokul.letscook.core.ui.theme.LetsCookTheme
 import co.uk.gokul.letscook.feature.home.ui.HomeScreen
 import co.uk.gokul.letscook.feature.home.ui.HomeViewModel
-import co.uk.gokul.letscook.feature.mealdetails.MealDetailsScreen
+import co.uk.gokul.letscook.feature.mealdetails.ui.MealDetailsScreen
+import co.uk.gokul.letscook.feature.mealdetails.ui.MealDetailsViewModel
 import co.uk.gokul.letscook.feature.meals.ui.MealsScreen
 import co.uk.gokul.letscook.feature.meals.ui.MealsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,8 +79,14 @@ class MainActivity : ComponentActivity() {
 
                         // Meal Details Screen Route
                         composable<Screen.MealDetails> { backStackEntry ->
+                            val viewModel = hiltViewModel<MealDetailsViewModel>()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                             val route = backStackEntry.toRoute<Screen.MealDetails>()
-                            MealDetailsScreen(mealId = route.mealId)
+                            viewModel.setMealId(route.mealId)
+                            MealDetailsScreen(
+                                uiState = uiState,
+                                onBackClick = { navController.popBackStack() }
+                            )
                         }
                     }
                 }
