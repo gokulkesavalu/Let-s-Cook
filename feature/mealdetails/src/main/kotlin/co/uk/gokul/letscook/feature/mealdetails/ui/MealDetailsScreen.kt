@@ -30,7 +30,6 @@ import coil3.compose.AsyncImage
 /**
  * Screen that displays detailed information about a specific meal.
  *
- * @param mealId The ID of the meal to display.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,10 +98,10 @@ private fun MealDetailsSection(uiState: MealDetailsUiState.Success) {
     ) {
         item {
             AsyncImage(
-                model = mealDetails.strImageSource,
+                model = mealDetails.strMealThumb,
                 contentDescription = null,
                 modifier = Modifier
-                    .height(250.dp)
+                    .height(300.dp)
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop
             )
