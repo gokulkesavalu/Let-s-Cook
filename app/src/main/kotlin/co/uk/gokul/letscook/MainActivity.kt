@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -82,7 +83,9 @@ class MainActivity : ComponentActivity() {
                             val viewModel = hiltViewModel<MealDetailsViewModel>()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                             val route = backStackEntry.toRoute<Screen.MealDetails>()
-                            viewModel.setMealId(route.mealId)
+                            LaunchedEffect(key1 = route.mealId) {
+                                viewModel.setMealId(route.mealId)
+                            }
                             MealDetailsScreen(
                                 uiState = uiState,
                                 onBackClick = { navController.popBackStack() }
